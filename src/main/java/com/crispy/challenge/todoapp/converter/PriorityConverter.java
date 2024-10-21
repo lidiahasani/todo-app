@@ -8,7 +8,7 @@ import java.util.Objects;
 @Component
 public class PriorityConverter {
 
-    Priority convert(String priority) {
+    public Priority convert(String priority) {
         return Objects.nonNull(priority) ? Priority.fromValue(priority) : Priority.LOW;
     }
 }

@@ -7,5 +7,6 @@ public record TaskDto(Long id,
                       String description,
                       String status,
                       Instant dueDate,
-                      String priority) {
+                      String priority,
+                      Long projectId) {
 }

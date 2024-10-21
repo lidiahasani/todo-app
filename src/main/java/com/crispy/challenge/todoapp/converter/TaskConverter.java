@@ -1,5 +1,7 @@
 package com.crispy.challenge.todoapp.converter;
 
+import com.crispy.challenge.todoapp.dto.SubtaskDto;
+import com.crispy.challenge.todoapp.dto.TaskDetailsDto;
 import com.crispy.challenge.todoapp.dto.TaskDto;
 import com.crispy.challenge.todoapp.model.Project;
 import com.crispy.challenge.todoapp.model.Task;
@@ -12,10 +14,12 @@ public class TaskConverter {
 
     private final StatusConverter statusConverter;
     private final PriorityConverter priorityConverter;
+    private final SubtaskConverter subtaskConverter;
 
-    public TaskConverter(StatusConverter statusConverter, PriorityConverter priorityConverter) {
+    public TaskConverter(StatusConverter statusConverter, PriorityConverter priorityConverter, SubtaskConverter subtaskConverter) {
         this.statusConverter = statusConverter;
         this.priorityConverter = priorityConverter;
+        this.subtaskConverter = subtaskConverter;
     }
 
     public List<TaskDto> toTaskDtoList(List<Task> tasks) {
@@ -30,7 +34,8 @@ public class TaskConverter {
                 task.getDescription(),
                 task.getStatus().getValue(),
                 task.getDueDate(),
-                task.getPriority().getValue());
+                task.getPriority().getValue(),
+                task.getProject().getId());
     }
 
     public Task toTask(TaskDto taskDto) {
@@ -48,4 +53,11 @@ public class TaskConverter {
         task.setProject(project);
         return task;
     }
+
+    public TaskDetailsDto toTaskDetailsDto(Task task) {
+        TaskDto taskDto = toTaskDto(task);
+        List<SubtaskDto> subtaskDtoList = subtaskConverter.toSubtaskDtoList(task.getSubtasks());
+        return new TaskDetailsDto(taskDto, subtaskDtoList, task.getDaysUntilDue());
+    }
+
 }
