@@ -4,6 +4,7 @@ import com.crispy.challenge.todoapp.converter.ProjectConverter;
 import com.crispy.challenge.todoapp.converter.StatusConverter;
 import com.crispy.challenge.todoapp.dto.ProjectDetailsDto;
 import com.crispy.challenge.todoapp.dto.ProjectDto;
+import com.crispy.challenge.todoapp.exception.NoResultFoundException;
 import com.crispy.challenge.todoapp.model.Owner;
 import com.crispy.challenge.todoapp.model.Project;
 import com.crispy.challenge.todoapp.repository.OwnerRepository;
@@ -50,22 +51,20 @@ public class ProjectServiceImpl implements ProjectService {
         return projectConverter.toProjectDtoList(projects);
     }
 
-    //TODO: Add exception handling
     @Override
     public ProjectDetailsDto getProjectDetails(Long id) {
         return projectRepository.findProjectWithTasks(id)
                 .map(projectConverter::toProjectDetailsDto)
-                .orElseThrow(null);
+                .orElseThrow(() -> new NoResultFoundException("Project not found."));
     }
 
-    //TODO: Add exception handling
     @Override
     public ProjectDto updateProject(Long id, ProjectDto projectDto) {
         return projectRepository.findById(id)
                 .map(updateProject(projectDto))
                 .map(projectRepository::save)
                 .map(projectConverter::toProjectDto)
-                .orElseThrow();
+                .orElseThrow(() -> new NoResultFoundException("Project not found."));
     }
 
     private UnaryOperator<Project> updateProject(ProjectDto projectDto) {
