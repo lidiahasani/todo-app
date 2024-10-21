@@ -35,7 +35,6 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
             """)
     Optional<Project> findProjectWithTasks(Long id);
 
-
     @Modifying
     @Query(value = """
             UPDATE project SET deleted = true

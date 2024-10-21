@@ -25,9 +25,9 @@ public class OwnerController {
 
     @PostMapping
     public ResponseEntity<OwnerDto> create(@RequestBody OwnerDto ownerDto) {
-        logger.info("Creating owner {}.", ownerDto);
+        logger.debug("Creating owner {}.", ownerDto);
         var result = ownerService.create(ownerDto);
-        logger.info("Created owner {}.", result);
+        logger.debug("Created owner {}.", result);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 }

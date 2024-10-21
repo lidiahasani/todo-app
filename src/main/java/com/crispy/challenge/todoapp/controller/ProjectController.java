@@ -6,7 +6,6 @@ import com.crispy.challenge.todoapp.service.ProjectService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,51 +25,54 @@ public class ProjectController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ProjectDto createProject(@RequestBody ProjectDto projectDto, @RequestParam Long ownerId) {
-        logger.info("Creating project: {}.", projectDto);
+        logger.debug("Creating project: {}.", projectDto);
         var result = projectService.createProject(projectDto, ownerId);
-        logger.info("Created project {}.", result);
+        logger.debug("Created project {}.", result);
         return result;
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<List<ProjectDto>> getAllProjects(@RequestParam Long ownerId) {
-        logger.info("Retrieving projects by ownerId: {}.", ownerId);
+    public List<ProjectDto> getAllProjects(@RequestParam Long ownerId) {
+        logger.debug("Retrieving projects by ownerId: {}.", ownerId);
         var result = projectService.getProjectsByOwner(ownerId);
-        logger.info("Retrieved projects: {}.", result);
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        logger.debug("Retrieved projects: {}.", result);
+        return result;
     }
 
     @GetMapping("/archived")
-    public ResponseEntity<List<ProjectDto>> getArchivedProjects(@RequestParam Long ownerId) {
-        logger.info("Retrieving archived projects by ownerId: {}.", ownerId);
+    @ResponseStatus(HttpStatus.OK)
+    public List<ProjectDto> getArchivedProjects(@RequestParam Long ownerId) {
+        logger.debug("Retrieving archived projects by ownerId {}.", ownerId);
         var result = projectService.getArchivedProjectsByOwner(ownerId);
-        logger.info("Retrieved archived projects: {}.", result);
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        logger.debug("Retrieved archived projects: {}.", result);
+        return result;
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProjectDetailsDto> viewDetails(@PathVariable Long id) {
-        logger.info("Retrieving project by projectId: {}.", id);
+    @ResponseStatus(HttpStatus.OK)
+    public ProjectDetailsDto viewDetails(@PathVariable Long id) {
+        logger.debug("Retrieving project by project id {}.", id);
         var result = projectService.getProjectDetails(id);
-        logger.info("Retrieved project: {}.", result);
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        logger.debug("Retrieved project: {}.", result);
+        return result;
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProjectDto> updateProject(@PathVariable Long id, @RequestBody ProjectDto projectDto) {
-        logger.info("Updating project: {}.", projectDto);
+    @ResponseStatus(HttpStatus.OK)
+    public ProjectDto updateProject(@PathVariable Long id, @RequestBody ProjectDto projectDto) {
+        logger.debug("Updating project {} with {}.", id, projectDto);
         var result = projectService.updateProject(id, projectDto);
-        logger.info("Updated project: {}.", result);
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        logger.debug("Updated project: {}.", result);
+        return result;
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProject(@PathVariable Long id) {
-        logger.info("Deleting project with id: {}.", id);
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteProject(@PathVariable Long id) {
+        logger.debug("Deleting project with id: {}.", id);
         projectService.deleteProject(id);
-        logger.info("Successfully deleted project.");
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        logger.debug("Successfully deleted project.");
     }
 
 }
