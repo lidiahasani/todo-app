@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Objects;
 
@@ -55,6 +56,11 @@ public class Task extends BaseTask {
 
     public void setSubtasks(List<Subtask> subtasks) {
         this.subtasks = subtasks;
+    }
+
+    @Transient
+    public long getDaysUntilDue() {
+        return Instant.now().until(dueDate, ChronoUnit.DAYS);
     }
 
     @Override
