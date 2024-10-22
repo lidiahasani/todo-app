@@ -21,6 +21,7 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
             WHERE o.id = :ownerId
             AND t.dueDate BETWEEN :startDate AND :endDate
             AND t.deleted = false
+            AND s.deleted = false
             GROUP BY t
             """)
     List<DailyTaskDto> findDailyTasks(Long ownerId, Instant startDate, Instant endDate);
@@ -28,9 +29,10 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     @Query("""
             SELECT t
             FROM Task t
-            LEFT JOIN FETCH t.subtasks
+            LEFT JOIN FETCH t.subtasks s
             WHERE t.id = :id
             AND t.deleted = false
+            AND s.deleted = false
             """)
     Optional<Task> findTaskWithSubtasks(Long id);
 
