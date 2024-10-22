@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.function.UnaryOperator;
 
@@ -38,7 +39,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public TaskDto create(TaskDto taskDto, Long projectId) {
+    public TaskDto createTask(TaskDto taskDto, Long projectId) {
         Project project = projectRepository.getReferenceById(projectId);
         Task task = taskConverter.toTask(taskDto, project);
         task = taskRepository.save(task);
@@ -47,13 +48,14 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<DailyTaskDto> getDailyTasks(Long ownerId, LocalDate date) {
-        Instant startOfToday = getInstant(date);
-        Instant startOfTomorrow = getInstant(date.plusDays(1));
-        return taskRepository.findDailyTasks(ownerId, startOfToday, startOfTomorrow);
+        DayBoundsDto dayBoundsDto = convertToDayBounds(date);
+        return taskRepository.findDailyTasks(ownerId, dayBoundsDto.start(), dayBoundsDto.end());
     }
 
-    private static Instant getInstant(LocalDate date) {
-        return date.atStartOfDay(ZoneId.systemDefault()).toInstant();
+    private static DayBoundsDto convertToDayBounds(LocalDate date) {
+        Instant start = date.atStartOfDay(ZoneId.systemDefault()).toInstant();
+        Instant end = start.plus(1, ChronoUnit.DAYS);
+        return new DayBoundsDto(start, end);
     }
 
     @Override

@@ -28,7 +28,7 @@ public class TaskController {
     @ResponseStatus(HttpStatus.CREATED)
     public TaskDto createTask(@RequestBody TaskDto taskDto, @RequestParam Long projectId) {
         logger.debug("Creating task {}.", taskDto);
-        var result = taskService.create(taskDto, projectId);
+        var result = taskService.createTask(taskDto, projectId);
         logger.debug("Created task {}", result);
         return result;
     }
@@ -36,9 +36,9 @@ public class TaskController {
     @GetMapping("/daily")
     @ResponseStatus(HttpStatus.OK)
     public List<DailyTaskDto> getDailyTasks(@RequestParam Long ownerId, @RequestParam LocalDate date) {
-        logger.debug("Retrieving today tasks.");
+        logger.debug("Retrieving tasks for: {}.", date);
         var result = taskService.getDailyTasks(ownerId,date);
-        logger.debug("Retrieved today tasks: {}", result);
+        logger.debug("Retrieved tasks: {}", result);
         return result;
     }
 
