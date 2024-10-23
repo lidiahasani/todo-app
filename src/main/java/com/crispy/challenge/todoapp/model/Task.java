@@ -59,8 +59,8 @@ public class Task extends BaseTask {
     }
 
     @Transient
-    public long getDaysUntilDue() {
-        return Instant.now().until(dueDate, ChronoUnit.DAYS);
+    public Long getDaysUntilDue() {
+        return Objects.nonNull(dueDate) ? Instant.now().until(dueDate, ChronoUnit.DAYS) : null;
     }
 
     @Override

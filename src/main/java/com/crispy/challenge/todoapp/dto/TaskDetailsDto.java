@@ -4,5 +4,5 @@ import java.util.List;
 
 public record TaskDetailsDto(TaskDto taskDto,
                              List<SubtaskDto> subtaskDtoList,
-                             long daysUntilDue) {
+                             Long daysUntilDue) {
 }
