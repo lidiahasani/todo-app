@@ -10,7 +10,7 @@ import java.util.List;
 public interface TaskService {
     TaskDto createTask(TaskDto taskDto, Long projectId);
 
-    List<DailyTaskDto> getDailyTasks(Long ownerId, LocalDate date);
+    List<DailyTaskDto> getDailyTasks(LocalDate date);
 
     TaskDetailsDto getTaskDetails(Long id);
 

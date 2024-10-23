@@ -13,7 +13,8 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     @Query("""
             SELECT p
             FROM Project p
-            WHERE p.owner.id = :ownerId
+            JOIN FETCH p.owner o
+            WHERE o.id = :ownerId
             AND p.deleted = false
             """)
     List<Project> findByOwnerId(Long ownerId);
@@ -21,7 +22,8 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     @Query("""
             SELECT p
             FROM Project p
-            WHERE p.owner.id = :ownerId
+            JOIN FETCH p.owner o
+            WHERE o.id = :ownerId
             AND p.deleted = true
             """)
     List<Project> findArchivedByOwnerId(Long ownerId);
@@ -31,15 +33,27 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
             FROM Project p
             LEFT JOIN FETCH p.tasks
             WHERE p.id = :id
+            AND p.owner.id = :ownerId
             AND p.deleted = false
             """)
-    Optional<Project> findProjectWithTasks(Long id);
+    Optional<Project> findProjectWithTasks(Long id, Long ownerId);
+
+    @Query("""
+            SELECT p
+            FROM Project p
+            JOIN FETCH p.owner o
+            WHERE p.id = :id
+            AND o.id = :ownerId
+            AND p.deleted = false
+            """)
+    Optional<Project> findByIdAndOwner(Long id, Long ownerId);
 
     @Modifying
-    @Query(value = """
-            UPDATE project SET deleted = true
-            WHERE id = :id
-            """, nativeQuery = true)
-    void softDeleteById(Long id);
+    @Query("""
+            UPDATE Project p SET p.deleted = true
+            WHERE p.id = :id
+            AND p.owner.id = :ownerId
+            """)
+    void softDeleteById(Long id, Long ownerId);
 
 }

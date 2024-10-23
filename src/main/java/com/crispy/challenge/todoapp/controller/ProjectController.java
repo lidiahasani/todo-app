@@ -24,27 +24,27 @@ public class ProjectController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ProjectDto createProject(@RequestBody ProjectDto projectDto, @RequestParam Long ownerId) {
+    public ProjectDto createProject(@RequestBody ProjectDto projectDto) {
         logger.debug("Creating project: {}.", projectDto);
-        var result = projectService.createProject(projectDto, ownerId);
+        var result = projectService.createProject(projectDto);
         logger.debug("Created project {}.", result);
         return result;
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<ProjectDto> getAllProjects(@RequestParam Long ownerId) {
-        logger.debug("Retrieving projects by ownerId: {}.", ownerId);
-        var result = projectService.getProjectsByOwner(ownerId);
+    public List<ProjectDto> getAllProjects() {
+        logger.debug("Retrieving projects.");
+        var result = projectService.getProjectsByOwner();
         logger.debug("Retrieved projects: {}.", result);
         return result;
     }
 
     @GetMapping("/archived")
     @ResponseStatus(HttpStatus.OK)
-    public List<ProjectDto> getArchivedProjects(@RequestParam Long ownerId) {
-        logger.debug("Retrieving archived projects by ownerId {}.", ownerId);
-        var result = projectService.getArchivedProjectsByOwner(ownerId);
+    public List<ProjectDto> getArchivedProjects() {
+        logger.debug("Retrieving archived projects.");
+        var result = projectService.getArchivedProjectsByOwner();
         logger.debug("Retrieved archived projects: {}.", result);
         return result;
     }

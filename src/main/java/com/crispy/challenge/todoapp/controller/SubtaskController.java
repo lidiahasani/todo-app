@@ -21,7 +21,7 @@ public class SubtaskController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public SubtaskDto createTask(@RequestBody SubtaskDto subtaskDto, @RequestParam Long taskId) {
+    public SubtaskDto createSubtask(@RequestBody SubtaskDto subtaskDto, @RequestParam Long taskId) {
         logger.debug("Creating subtask {}.", subtaskDto);
         var result = subtaskService.createSubtask(subtaskDto, taskId);
         logger.debug("Created subtask {}", result);
@@ -39,7 +39,7 @@ public class SubtaskController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public SubtaskDto updateTask(@PathVariable Long id, @RequestBody SubtaskDto subtaskDto) {
+    public SubtaskDto updateSubtask(@PathVariable Long id, @RequestBody SubtaskDto subtaskDto) {
         logger.debug("Updating subtask {} with {}.", id, subtaskDto);
         var result = subtaskService.updateSubtask(id, subtaskDto);
         logger.debug("Updated subtask: {}", result);

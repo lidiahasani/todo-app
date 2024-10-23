@@ -6,11 +6,11 @@ import com.crispy.challenge.todoapp.dto.ProjectDto;
 import java.util.List;
 
 public interface ProjectService {
-    ProjectDto createProject(ProjectDto projectDto, Long ownerId);
+    ProjectDto createProject(ProjectDto projectDto);
 
-    List<ProjectDto> getProjectsByOwner(Long ownerId);
+    List<ProjectDto> getProjectsByOwner();
 
-    List<ProjectDto> getArchivedProjectsByOwner(Long ownerId);
+    List<ProjectDto> getArchivedProjectsByOwner();
 
     ProjectDetailsDto getProjectDetails(Long id);
 

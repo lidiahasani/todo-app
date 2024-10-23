@@ -4,6 +4,7 @@ import com.crispy.challenge.todoapp.dto.DailyTaskDto;
 import com.crispy.challenge.todoapp.dto.TaskDetailsDto;
 import com.crispy.challenge.todoapp.dto.TaskDto;
 import com.crispy.challenge.todoapp.service.TaskService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,7 @@ public class TaskController {
         this.taskService = taskService;
     }
 
+    @Operation(summary = "Create a task")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public TaskDto createTask(@RequestBody TaskDto taskDto, @RequestParam Long projectId) {
@@ -35,9 +37,9 @@ public class TaskController {
 
     @GetMapping("/daily")
     @ResponseStatus(HttpStatus.OK)
-    public List<DailyTaskDto> getDailyTasks(@RequestParam Long ownerId, @RequestParam LocalDate date) {
+    public List<DailyTaskDto> getDailyTasks(@RequestParam LocalDate date) {
         logger.debug("Retrieving tasks for: {}.", date);
-        var result = taskService.getDailyTasks(ownerId,date);
+        var result = taskService.getDailyTasks(date);
         logger.debug("Retrieved tasks: {}", result);
         return result;
     }
