@@ -31,10 +31,11 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     @Query("""
             SELECT p
             FROM Project p
-            LEFT JOIN FETCH p.tasks
+            LEFT JOIN FETCH p.tasks t
             WHERE p.id = :id
             AND p.owner.id = :ownerId
             AND p.deleted = false
+            AND (t.deleted = false OR p.tasks IS EMPTY)
             """)
     Optional<Project> findProjectWithTasks(Long id, Long ownerId);
 
