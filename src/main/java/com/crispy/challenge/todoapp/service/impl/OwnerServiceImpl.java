@@ -45,6 +45,7 @@ public class OwnerServiceImpl implements OwnerService {
 
     @Override
     public void logout(String token) {
-            tokenService.revokeToken(token);
+        String jwt = token.substring(7);
+        tokenService.revokeToken(jwt);
     }
 }

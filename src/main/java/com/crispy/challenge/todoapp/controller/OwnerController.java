@@ -42,7 +42,7 @@ public class OwnerController {
     @Operation(summary = "Log out")
     @PostMapping("/logout")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void logout(@RequestParam String token){
+    public void logout(@RequestHeader("Authorization") String token){
         logger.debug("Attempting to logout.");
         ownerService.logout(token);
         logger.debug("Logged out successfully.");
