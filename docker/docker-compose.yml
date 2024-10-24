@@ -7,6 +7,8 @@ services:
       spring.datasource.url: "jdbc:postgresql://database:5432/todoapp"
       spring.datasource.username: todoapp_owner
       spring.datasource.password: todoapp_password
+    depends_on:
+      - database
   database:
     image: postgres:15-alpine
     volumes:
