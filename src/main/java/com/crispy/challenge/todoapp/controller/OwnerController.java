@@ -2,6 +2,7 @@ package com.crispy.challenge.todoapp.controller;
 
 import com.crispy.challenge.todoapp.dto.OwnerDto;
 import com.crispy.challenge.todoapp.service.OwnerService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,7 @@ public class OwnerController {
         this.ownerService = ownerService;
     }
 
+    @Operation(summary = "Sign up")
     @PostMapping("/signup")
     public ResponseEntity<OwnerDto> signUp(@RequestBody OwnerDto ownerDto) {
         logger.debug("Creating owner {}.", ownerDto);
@@ -28,6 +30,7 @@ public class OwnerController {
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
+    @Operation(summary = "Log In")
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
     public String login(@RequestBody OwnerDto ownerDto){
@@ -37,6 +40,7 @@ public class OwnerController {
         return result;
     }
 
+    @Operation(summary = "Log out")
     @PostMapping("/logout")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void logout(@RequestParam String token){

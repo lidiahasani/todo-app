@@ -2,6 +2,7 @@ package com.crispy.challenge.todoapp.controller;
 
 import com.crispy.challenge.todoapp.dto.SubtaskDto;
 import com.crispy.challenge.todoapp.service.SubtaskService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ public class SubtaskController {
         this.subtaskService = subtaskService;
     }
 
+    @Operation(summary = "Create a subtask")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public SubtaskDto createSubtask(@RequestBody SubtaskDto subtaskDto, @RequestParam Long taskId) {
@@ -28,6 +30,7 @@ public class SubtaskController {
         return result;
     }
 
+    @Operation(summary = "View details of a subtask")
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public SubtaskDto viewDetails(@PathVariable Long id) {
@@ -37,6 +40,7 @@ public class SubtaskController {
         return result;
     }
 
+    @Operation(summary = "Update a subtask")
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public SubtaskDto updateSubtask(@PathVariable Long id, @RequestBody SubtaskDto subtaskDto) {
@@ -46,6 +50,7 @@ public class SubtaskController {
         return result;
     }
 
+    @Operation(summary = "Archive a subtask")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteSubtask(@PathVariable Long id) {

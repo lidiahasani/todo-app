@@ -35,6 +35,7 @@ public class TaskController {
         return result;
     }
 
+    @Operation(summary = "Get tasks for a chosen day")
     @GetMapping("/daily")
     @ResponseStatus(HttpStatus.OK)
     public List<DailyTaskDto> getDailyTasks(@RequestParam LocalDate date) {
@@ -44,6 +45,7 @@ public class TaskController {
         return result;
     }
 
+    @Operation(summary = "View details of a task")
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public TaskDetailsDto viewDetails(@PathVariable Long id) {
@@ -53,6 +55,7 @@ public class TaskController {
         return result;
     }
 
+    @Operation(summary = "Update a task")
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public TaskDto updateTask(@PathVariable Long id, @RequestBody TaskDto taskDto) {
@@ -62,6 +65,7 @@ public class TaskController {
         return result;
     }
 
+    @Operation(summary = "Archive a task")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteTask(@PathVariable Long id) {
