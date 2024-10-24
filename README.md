@@ -1,4 +1,4 @@
-# TODO APP
+## TODO App
 
 ### Overview
 
@@ -110,4 +110,4 @@ For the Swagger UI,  please go to http://localhost:8080/swagger-ui/index.html
 
 ### Testing the Application
 
-For the detailed instructions on how to test the APIs, please refer to **TESTING.pdf** file.
+For the detailed instructions on how to test the APIs, please refer to [TESTING DOCUMENTATION](docs/TESTING.pdf).
