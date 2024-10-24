@@ -1,0 +1,17 @@
+services:
+  todoapp:
+    image: docker.io/library/todoapp:0.0.1-SNAPSHOT
+    ports:
+      - "8080:8080"
+    environment:
+      spring.datasource.url: "jdbc:postgresql://database:5432/todoapp"
+      spring.datasource.username: todoapp_owner
+      spring.datasource.password: todoapp_password
+  database:
+    image: postgres:15-alpine
+    volumes:
+      - ./db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: todoapp_owner
+      POSTGRES_PASSWORD: todoapp_password
+      POSTGRES_DB: todoapp
