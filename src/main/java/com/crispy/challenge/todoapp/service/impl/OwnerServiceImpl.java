@@ -30,10 +30,9 @@ public class OwnerServiceImpl implements OwnerService {
     }
 
     @Override
-    public OwnerDto create(OwnerDto ownerDto) {
+    public void create(OwnerDto ownerDto) {
         Owner owner = ownerConverter.toOwner(ownerDto);
-        owner = ownerRepository.save(owner);
-        return ownerConverter.toOwnerDto(owner);
+        ownerRepository.save(owner);
     }
 
     @Override
